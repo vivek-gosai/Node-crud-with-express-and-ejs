@@ -61,9 +61,26 @@ app.get('/deletedata/:id',(req,res)=>{
     data=deletedata
     res.redirect('/')
 })
+// register route 
+
+app.get('/home',(req,res)=>{
+    res.render('home')
+})
+
+app.post('/home',(req,res)=>{
+    console.log(req.body);
+    res.render('form')
+    
+})
 //  log in route
 app.get('/login',(req,res)=>{
-res.render('Login')
+
+    res.render('Login')
+})
+app.post('/login',(req,res)=>{
+    console.log(req.body);
+    
+    res.redirect('/')
 })
 app.listen(process.env.port,()=>console.log('server is run')) 
 
