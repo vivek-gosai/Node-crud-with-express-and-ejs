@@ -1,6 +1,8 @@
 const express = require('express')
 
+const path =require('path')
 app = express()
+app.use(express.static(path.join(__dirname,'photos')))
 
 app.set('view engine','ejs');
 app.use(express.urlencoded({extended:true}))
@@ -59,6 +61,9 @@ app.get('/deletedata/:id',(req,res)=>{
     data=deletedata
     res.redirect('/')
 })
-
+//  log in route
+app.get('/login',(req,res)=>{
+res.render('Login')
+})
 app.listen(process.env.port,()=>console.log('server is run')) 
 
