@@ -8,25 +8,27 @@ app.set('view engine','ejs');
 app.use(express.urlencoded({extended:true}))
 
  require('dotenv').config()
-let data =[]
+
+// store values in an array
+let data =[];
+let loginusers=[];
+let registeredUsers = [];
  
 app.get('/',(req,res)=>{
-    console.log(req.url);
+    // console.log(req.url);
 
     res.render('home', {data:data})   
 })
 app.get('/form',(req,res)=>{
-    console.log(req.url); 
+    // console.log(req.url); 
 
     res.render('form')
 })
 app.post('/form',(req,res)=>{
-
     console.log(req.url);
-
     let {name,email,supportId,feedback}=req.body;
-
     let newdata ={id:Date.now(),name:name,email:email,supportId:supportId,feedback:feedback}
+
     data.push(newdata)  
     console.log(data);
     res.redirect('/');
@@ -43,7 +45,6 @@ app.get('/editdata/:id', (req,res)=>{
 
 app.post('/editdata/:id',(req,res)=>{
     let {name,email,supportId,feedback} =req.body
-
     let user =data.find((it)=>it.id ==req.params.id)
 
     user.name =name
@@ -66,20 +67,25 @@ app.get('/deletedata/:id',(req,res)=>{
 app.get('/home',(req,res)=>{
     res.render('home')
 })
-
 app.post('/home',(req,res)=>{
-    console.log(req.body);
-    res.render('form')
+    let {name,email,pass}=req.body
+    let newuser={id:Math.floor(Math.random()*1000),name:name,email:email,pass:pass}
+    registeredUsers.push(newuser)
+    console.log(registeredUsers);
     
+   res.end()
 })
 //  log in route
 app.get('/login',(req,res)=>{
-
+     
     res.render('Login')
 })
 app.post('/login',(req,res)=>{
-    console.log(req.body);
-    
+    // console.log(req.body);
+    let {uname,email,psw}=req.body;
+    let newlog={id:Math.floor(Math.random()*1000),name:uname,email:email,psw:psw}
+    loginusers.push(newlog)
+    console.log(loginusers);   
     res.redirect('/')
 })
 app.listen(process.env.port,()=>console.log('server is run')) 
